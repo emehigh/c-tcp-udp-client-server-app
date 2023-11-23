@@ -1,0 +1,45 @@
+#########################################################################
+#########################################################################
+#########################################################################
+
+    Tema 2 Protocoale de Comunicatii - Aplicatie client server TCP si UDP
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+     * Pentru partea de server am creat 2 socketi, unul UDP si unul TCP, pe 
+    care i-am legat de localhost si de portul dat ca parametru, 
+    si i-am pus intr-un set impreuna cu file descriptorul pentru
+    STDIN. Cei 3 file descriptori asteapta pentru input. Daca inputul 
+    este de la stdin (care poate fi doar "exit"), serverul trimite tuturor
+    clientilor mesajul de inchidere de conexiune iar programul se opreste.
+        Daca avem input pe socket-ul udp, mesajul este "decodificat" confrom
+    cerintei si un "packet" de forma udp (dupa cum am definit-o eu) este
+    trimis tututor clientilor tCP abonati la topicul respecitv (generat de 
+    clientul udp).
+        Daca avem input pe socket-ul tcp si se incearca o conexiune noua,
+    serverul verifica daca clientul este deja conectat. Daca nu, il adauga
+    intr-o lista dupa id-ul sau. Tot pe socket-ul tcp poate primi de la 
+    clienti cereri de subscribe/unsubscribe pentru un topic (am creat 
+    o structura de tip map in care leg id-ul unui client de o lista 
+    cu subscriptiile sale). Pe socket-ul tcp se pot primi si cereri de
+    deconectare de la clienti.
+     * Pentru partea de client am creat 1 singur socket TCP care urmeaza
+     sa se conecteze la server. Alaturi de el am adaugat intr-un set si
+     file-descriptorul stdin deoarace si clientul poate primi anumite 
+     comenzi (subscribe la un topic, unsubscribe sau exit). In functie
+     de comanda primita, clientul trimite un "pachet" cu un tip de mesaj
+     corespunzator (subscribe,unsubscribe,exit). Pe socket-ul tcp
+     clientul asteapta continutul corespunzator topicurilor la care el
+     este abonat. Atunci cand primeste un mesaj, acesta afiseaza topicul,
+     tipul de date al mesajului si mesajul.
+
+#########################################################################
+#########################################################################
+#########################################################################
+
+    Paraschiva Mihai Eugeniu - 322CC
+
+#########################################################################
+#########################################################################
